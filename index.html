@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ladies Cakes | Pastry Boutique </title>
+    <link rel="icon" href="img/lcrosacorto.svg" type="image/svg">
+    <link rel="stylesheet" href="estilos/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Yeseva+One&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/031f70e06c.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-storage.js"></script>
+    <script src="js/scripts.js"></script>
+</head>
+<body onload= Init()>
+    <header class="navbar">
+        <div class="header__logo">
+            <a href="index.html"><img src="img/lcrosa.svg" alt="Logo" class="header__logoImg"></a>
+        </div>
+        <div class="header__cart">
+            <a id="openCartButton" onclick="OpenCart()" href="#"><i class="fas fa-shopping-cart cart-icon"></i><span id="cartCount" class="header__cartCountText">0 Productos</span></a>
+            
+        </div>
+        <nav>
+            <a id="navIcon__a"href="#menu"><i class="fas fa-bars nav__menuIcon"></i></a>
+            <ul class="nav__nav" id="menu">
+                <li><a class="nav__menuListItem" href="#"><i class="far fa-window-close nav__menuIcon--close"></i></a></li>
+                <li class="nav__listItem">
+                    <a href="index.html">Inicio</a>
+                </li>
+                <li class="nav__listItem">
+                    <a href="sections/about-us.html">¿Quiénes Somos?</a>
+                </li>
+                <li class="nav__listItem">
+                    <a href="sections/contact.html">Contacto</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section class="body__portada">
+        <img src="img/portada.svg" alt="" class="body__portadaImg">
+    </section>
+    <section class="body__modal">
+        <div class="modal__container">
+            <i onclick="ModalClose('cart')" class="fas fa-window-close modal__closeIcon"></i>
+            <p class="modal__title"> Productos en el carrito:</p>
+            <p class="carritoVacio-text">No hay productos en el carrito.</p>
+            <div id="encabezadoCarrito" class="modal__titleColumn">
+                <ul class="modal__imageColumn">
+                    <li class="encabezadoCarrito-text"><p> &nbsp; </p></li>
+                </ul>
+                <ul class="modal__descriptionColumn">
+                    <li class="encabezadoCarrito-text">Descripción:</li>
+                </ul>
+                <ul class="modal__priceColumn" style="display:none;">
+                    <li class="encabezadoCarrito-text">Precio:</li>
+                </ul>
+                <ul class="modal__quantityColumn">
+                    <li class="encabezadoCarrito-text">Cantidad:</li>
+                </ul>
+                <ul class="modal__deleteColumn">
+                    <li class="encabezadoCarrito-text">Quitar:</li>
+                </ul>
+            </div>
+            <div class="modal__cuenta">
+            <p class="cuenta__total-text" style="display:none;">Total: </p>
+            <p class="cuenta__total-value" id="cart-value" style="display:none;">$ 0</p>
+        </div>
+        <div class="modalFooter__buttonContainer">
+            <a class="modalFooter__button" href="#" onclick="ModalClose('cart')">Volver a la tienda</a>
+            <a id="goToCheckout-button" class="modalFooter__button" href="sections/cart-checkout.html">Solicitar cotización</a>
+        </div>
+        <div class='modal__cartClean'>
+            <a  href="#" onclick="CartClean()">Vaciar carrito</a>
+        </div>
+        </div>
+
+    </section>
+    <section class="body__productModal">
+        <div class="productModal__container">
+        <div class="modal__headerContainer">
+            <i onclick="ModalClose('prod')" class="fas fa-window-close productModal__closeIcon"></i>
+            <h3 class="productModal__title">Producto</h3>
+        </div>
+            <div class="productModal__grid">
+            <div class="productModal__gridImg">
+                <img class="gridImg__img" src="" alt="">
+            </div>
+            <div class="productModal__gridDescription">
+                <!--<p class="gridDescription__title">Descripción:</p>-->
+                <p class="gridDescription__text">Descripción</p>
+            </div>
+            <div class="productModal__gridPrice" style="display:none;">
+                <p class="gridPrice__price">precio</p>
+            </div>
+            <div class="productModal__gridCart">
+                <div class="gridCart__quantity">
+                    <a id="Product-buttonDown" class="gridCart__quantity-button">-</a>
+                    <p class="gridCart__quantity-text">1</p>
+                    <a id="Product-buttonUp" class="gridCart__quantity-button">+</a>
+                </div>
+                <a class="gridCart__button" href="#" id="buttonCheck"><p id="gridCart__button-hidden"> <i class="fas fa-check-circle shop__cartAdd"></i> Agregado</p> <p id="gridCart__button-visible">Agregar al carrito</p> </a>
+                <a class="gridCart__button" id="buttonModal-checkout" href="sections/cart-checkout.html">Ir a Cotizar</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+    
+    <section class="shop__container">
+        
+        <div class="shop__filterContainer">
+            <h1>Nuestras Delicias</h1>
+            <div >
+                <h2 class="">Mostrar:</h2>
+                <form class="shop__filter" id="shop__filter">
+                    <div class="filter__item">
+                        <input type="checkbox" id="filter-all" name="filter" class="input__filter" value="todo" onchange="CheckboxSelect('all')" checked>
+                        <label for="filter-all">Todo</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="shop__elements">
+            <p class="shop__noElements">No hay elementos para mostrar</p>
+            <ul id="shop__list" class="shop__list">
+            
+            </ul>
+        </div>
+        
+        
+    </section>
+    <footer class="main__footer">
+        <div class="footer__container">
+            <p class="footer__contact-title">Ladies Cakes ®️</p>
+            <p class="footer__contact-text"><a class="footer__text" href="index.html">Inicio</a> • <a class="footer__text" href="sections/about-us.html">¿Quiénes Somos?</a> • <a class="footer__text" href="sections/contact.html">Contacto</a></p>
+            <ul class="socialLinks__list">
+                <li class="socialLinks__listItem"><a class="socialLinks__link" href="https://api.whatsapp.com/send?phone=51992407941"><i class="fab fa-whatsapp-square wapp-icon"></i></a></li>
+                <li class="socialLinks__listItem"><a class="socialLinks__link" href="https://www.instagram.com/ladiescakesoficial/"><i class="fab fa-instagram-square"></i></a></li>
+                <li class="socialLinks__listItem"><a class="socialLinks__link"  href="https://www.facebook.com/ladiescakesoficial"><i class="fab fa-facebook-square"></i></a></li>
+            </ul>
+    </div>
+    </footer>
+
+
+</body>
+</html>

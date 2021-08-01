@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ladies Cakes | Administración</title>
+    <link rel="icon" href="../img/lcrosacorto.svg" type="image/svg">
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    <link rel="stylesheet" href="../estilos/main.css">
+    <script src="../js/login.js"></script>
+</head>
+<body>
+    <header>
+        <a class="header__logOutButton" href="#" onclick="LogOut()">Cerrar sesión</a>
+        <div class="header__logo">
+            <a href="../admin/index.html"><img src="../img/lcrosa.svg" alt="Logo" class="header__logoImg"></a>
+        </div>
+    </header>
+    <h1>Administrador de la Web</h1>
+        
+    <section class="noLog">
+        <div class="noLog__auth-method">
+            <div id="firebaseui-auth-container"></div>
+            <div id="loader">Loading...</div>
+        </div>
+    </section>
+    <section class="onLog">
+        <div>
+            <h2>¡Bienvenido/a!</h2>
+            
+        </div>
+        <div class="admin__options">
+            <h3>Seleccione la acción que desea realizar:</h3>
+            <ul class="admin__taskList">
+                <li class="admin__taskItem"><a class="linkButton" href="products-manager.html">Gestión de productos</a></li>
+                <li class="admin__taskItem"><a class="linkButton" href="orders-manager.html">Gestión de pedidos</a></li>
+            </ul>
+                
+        </div>
+    </section>
+</body>
+</html>

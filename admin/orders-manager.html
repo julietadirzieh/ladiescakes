@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ladies Cakes | Administrador de Pedidos</title>
+    <link rel="stylesheet" href="../estilos/main.css">
+    <script src="https://kit.fontawesome.com/031f70e06c.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-database.js"></script>
+    <script src="../js/orders-manager.js"></script>
+</head>
+<body>
+    <header>
+        <a class="header__logOutButton" href="#" onclick="LogOut()">Cerrar sesión</a>
+        <div class="header__logo">
+            <a href="../admin/index.html"><img src="../img/lcrosa.svg" alt="Logo" class="header__logoImg"></a>
+        </div>
+    </header>
+    <a class="adminGoBack"href="index.html"><-Volver al administrador</a>
+
+    <h1>Gestión de productos</h1>
+    <h2>Administrador de pedidos</h2>
+    <section class="onLog">
+        <div class="orders__container">
+            <h3>Pedidos:</h3>
+            <div class="orders__ListContainer">
+                <ul id="orders-names" class="orders__UL">
+                    <li class="orders__ListTitle">Cliente:</li>
+                </ul>
+                <ul id="orders-address" class="orders__UL">
+                    <li class="orders__ListTitle">Domicilio</li>
+                </ul>
+                <ul id="orders-deliverMethod" class="orders__UL">
+                    <li class="orders__ListTitle">Envío</li>
+                </ul>
+                <ul id="orders-status" class="orders__UL">
+                    <li class="orders__ListTitle">Estado</li>
+                </ul>
+                <ul id="order-statusChange" class="orders__UL">
+                    <li class="orders__ListTitle">Pasar a..</li>
+                </ul>
+                <ul id="orders-total" class="orders__UL">
+                    <li class="orders__ListTitle">Total</li>
+                </ul>
+                <ul id="orders-moreInfo" class="orders__UL">
+                    <li class="orders__ListTitle">Ver</li>
+                </ul>
+            </div>
+        </div>
+        <div class="orders__detailsModal">
+            <div class="detailsModal__container">
+            <div class="modal__headerContainer">
+                <i onclick="ModalClose()" class="fas fa-window-close modal__closeIcon"></i>
+                <h3 class="detailsModal__title">Pedido</h3>
+            </div>
+                <div class="orders__details">
+                    <div class="orders__detailsColumns">
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Cliente: </p>
+                            <p id="order-client"></p>
+                        </div>
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Teléfono: </p>
+                            <p id="order-phone"></p>
+                        </div>
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Correo electrónico: </p>
+                            <p id="order-email"></p>
+                        </div>
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Domicilio: </p>
+                            <p id="order-address"></p>
+                        </div>
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Ciudad/Provincia: </p>
+                            <p id="order-stateCity"></p>
+                        </div>
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Código Postal: </p>
+                            <p id="order-zipCode"></p>
+                        </div>
+                    </div>
+                    <div class="orders__detailsColumns">
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Tipo de envío: </p>
+                            <p id="order-deliver"></p>
+                        </div>
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Medio de pago: </p>
+                            <p id="order-payment"></p>
+                        </div>
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Estado del pedido: </p>
+                            <p id="order-status"></p>
+                        </div>
+                        <div class="detailsColumns__divItem">
+                            <p class="orders__detailsTitle">Total: </p>
+                            <p id="order-total"></p>
+                        </div>
+                        <div>
+                            <p class="orders__detailsTitle">Comentarios: </p>
+                            <p id="order-comments"></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Productos: </h3>
+                    <div class="order__products">
+                        <ul id="order-productDescription">
+                            <li>Denominación</li>
+                        </ul>
+                        <ul id="order-productQuantity">
+                            <li>Cantidad</li>
+                        </ul>
+                        <ul id="order-productPricePerUnit">
+                            <li>$ x Unidad</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <button class="refresh-button" onclick="RefreshOrders()">Actualizar</button>
+    </div>
+    
+    </section>
+    <section class="noLog">
+        <h3>Por favor logueese de nuevo haciendo click <a href="index.html">>>>aquí<<<</a></h3>
+    </section>
+</body>
+</html>

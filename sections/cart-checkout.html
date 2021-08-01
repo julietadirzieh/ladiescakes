@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ladies Cakes | Checkout </title>
+    <link rel="icon" href="../img/lcrosacorto.svg" type="image/svg">
+    <link rel="stylesheet" href="../estilos/main.css">
+    <!--<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>-->
+    <script src="https://kit.fontawesome.com/031f70e06c.js" crossorigin="anonymous"></script>         
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Yeseva+One&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+    <script src="../js/checkout.js" defer></script>
+</head>
+<body onload=Init()>
+    <header>
+        <div class="header__logo">
+            <a href="../index.html"><img src="../img/lcrosa.svg" alt="Logo" class="header__logoImg"></a>
+        </div>
+    </header>
+    <h1>Finalice su cotización</h1>
+    <section class="section__checkout">
+    <div class="checkout__container">  
+        <div class="checkout-products">
+            <h3>Resumen de la cotización:</h3>
+            <div class="checkout-productsLists">
+            <ul class="checkout__productsList" id="checkout__listImage">
+                <li class="checkout__listItem">&nbsp;</li>
+            </ul>
+            <ul class="checkout__productsList" id="checkout__listQuantity">
+                    <li class="checkout__listItem checkout__listItem-title">Cant</li>
+                </ul>
+            <ul class="checkout__productsList" id="checkout__listDescription">
+                    <li class="checkout__listItem checkout__listItem-title">Descripción</li>
+                </ul>
+            <ul class="checkout__productsList" id="checkout__listPrice" style="display:none;">
+                    <li class="checkout__listItem checkout__listItem-title">Precio</li>
+                </ul>
+                <ul class="checkout__productsList" id="checkout__listTotal" style="display:none;">
+                    <li class="checkout__listItem checkout__listItem-title">Subtotal</li>
+                </ul>
+            </div>
+            <div class="checkout__ratesContainer">
+                <!-- <div class ="checkout_rates" id="checkout__deliverRate">
+                    <p>Costo de envío: </p><p id="deliverRate-text">$ 0</p>
+                </div>
+                
+               <div class ="checkout_rates" id="checkout__mpRate">
+                    <p>Costo servicio MercadoPago(7%)</p><p id="mpRate-text">$ 0</p>
+                </div>-->
+                    <div class="modal__cuenta checkout_rates" style="display:none;">
+                        <p class="cuenta__total-text">Total: </p>
+                        <p class="cuenta__total-value" id="cart-value">$ 0</p>
+                    </div>
+
+            </div>
+                <div class="checkout__deliverMethods">
+                    <h3 class="colorBlanco">Seleccione la modalidad de pago y forma de entrega:</h3>
+                    <p class="input-null" id="deliver-alert"></p>
+                    <form class="checkout__deliverForm" action="">
+                        <div>
+                            <input onclick="DeliverSelect('takeAway')" type="radio" id="deliver-takeAway" name="deliver__method" value="takeAway" checked>
+                            <label for="deliver-takeAway" class="colorBlanco">Se acordarán en la cotización.</label>
+                        </div>
+                        <div style="display:none;">
+                            <input onclick="DeliverSelect('delivery')" type="radio" id="deliver-delivery" name="deliver__method" value="delivery">
+                            <label for="deliver-delivery">Envío por cadete</label>
+                        </div>
+                        <div style="display:none;">
+                            <input onclick="DeliverSelect('freeDelivery')" type="radio" id="deliver-freeDelivery" name="deliver__method" value="freeDelivery">
+                            <label for="deliver-freeDelivery">Envío gratis (a definir)</label>
+                        </div>
+                    </form>
+                </div>
+                <div style="display:none;" class="checkout__payments">
+                    <h3>Seleccione forma de pago:</h3>
+                    <p class="input-null" id="payment-alert"></p>
+                    <form action="" id="checkout__paymentForm">
+                        <div>
+                            <input type="radio" id="payment-cash" onclick="PaymentSelect('cash')" name="payment__method" value="cash" checked>
+                            <label for="payment-cash">Efectivo</label>
+                        </div>
+                        <div>
+                            <input style="display:none;" type="radio" id="payment-mp" onclick="PaymentSelect('mercadopago')" name="payment__method" value="mercadopago">
+                            <label style="display:none;" or="payment-mp">MercadoPago</label>
+                        </div>
+                    </form>
+                </div>
+        </div>
+        <div class="checkout__user">
+            <h3>Ingrese sus Datos:</h3>
+        <form class="checkout__userForm">
+            <div class="customer__names">
+                <div class="checkout__inputColumn">
+                    <label for="customer__lastName">Apellido</label>
+                    <input type="text" id="customer__lastName" class="customer__inputLastName">
+                    <p class="input-null" id="customer-lastName-alert"></p>
+                </div>
+                <div class="checkout__inputColumn">
+                    <label for="customer__name">Nombre</label>
+                    <input type="text" id="customer__name" class="customer__inputName">
+                    <p class="input-null" id="customer-name-alert"></p>
+                </div>
+            </div>
+            <div class="customer__mailPhone">
+                <div class="checkout__inputColumn">
+                    <label for="customer__email">Correo Electrónico</label>
+                    <input type="email" id="customer__email" class="customer__inputEmail">
+                    <p class="input-null" id="customer-email-alert"></p>
+                </div>
+                <div class="checkout__inputColumn">
+                    <label for="customer__phone">Teléfono</label>
+                    <input type="tel" id="customer__phone" class="customer__inputPhone">
+                    <p class="input-null" id="customer-phone-alert"></p>
+                </div>
+            </div>
+            <div class="customer__address" style="display:none;">
+                <div class="checkout__inputColumn">
+                    <label for="customer__address">Dirección</label>
+                    <input type="text" id="customer__address" class="customer__inputAddress">
+                    <p class="input-null" id="customer-address-alert"></p>
+                </div>
+                <div class="checkout__inputColumn">
+                    <label for="customer__addressZip">Código Postal</label>
+                    <input type="text" id="customer__addressZip" class="customer__inputZip">
+                    <p class="input-null" id="customer-zip-alert"></p>
+                </div>
+            </div>
+            <div class="customer__city" style="display:none;">
+                <div class="checkout__inputColumn">
+                    <label for="customer__addressCity">Ciudad</label>
+                    <input type="text" id="customer__addressCity" class="customer__inputCity">
+                    <p class="input-null" id="customer-city-alert"></p>
+                </div>
+                <div class="checkout__inputColumn">
+                    <label for="customer__addressState">Provincia</label>
+                    <input type="text" id="customer__addressState" class="customer__inputState">
+                    <p class="input-null" id="customer-state-alert"></p>
+                </div>
+            </div>
+            <div class="customer__observations">
+                <label for="customer__observations">Comentarios:</label>
+                <textarea maxlength="100"id="customer__observations"rows="5" class="customer__inputObservations"></textarea>
+                <p class="input-null" id="customer-observations-alert"></p>
+            </div>
+        </form>
+        <div class="checkout__buttonsContainer">
+            <a class="checkout__button" href="../index.html">Volver a la tienda</a>
+            <a class="checkout__button" id="checkout__buyButton" onclick="BuyClick()" >Cotizar</a>
+        </div>
+        </div>
+    </div>
+    
+</section>
+<section id="body__alert" class="body__alert">
+    <div class="alert__container">
+    <div class="modal__headerContainer">
+        <h3 class="alert__title">Ladies Cakes</h3>
+    </div>
+    <div class="alert__messageContainer">
+        <p class="alert__message" id="alert__message">¡Gracias!</p>
+        <p class="alert__message" id="alert__message">Nos comunicaremos a la brevedad.</p>
+        <a onclick="GoHome()" class="alert__okButton">Ir al inicio</a>
+    </div>
+</div>
+</section>
+<footer class="main__footer">
+    <div class="footer__container">
+        <p class="footer__contact-title">Ladies Cakes ®️</p>
+        <p class="footer__contact-text">Inicio • ¿Quiénes somos? • Contacto </p>
+        <ul class="socialLinks__list">
+            <li class="socialLinks__listItem"><a class="socialLinks__link" href="https://api.whatsapp.com/send?phone=51992407941"><i class="fab fa-whatsapp-square wapp-icon"></i></a></li>
+            <li class="socialLinks__listItem"><a class="socialLinks__link" href="https://www.instagram.com/ladiescakesoficial/"><i class="fab fa-instagram-square"></i></a></li>
+            <li class="socialLinks__listItem"><a class="socialLinks__link"  href="https://www.facebook.com/ladiescakesoficial"><i class="fab fa-facebook-square"></i></a></li>
+        </ul>
+</div>
+</footer>
+
+</body>
+</html>
