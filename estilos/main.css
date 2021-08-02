@@ -979,6 +979,12 @@ padding-left: 0px;
     border-radius: 0.5em;
 }
 
+@media screen and (max-width: 480px) {
+    .section__aboutUsImg{
+        width: 200px;
+        height: 200px;
+    }
+}
 
 /*----------- Admin site ------------*/
 .admin__options{
